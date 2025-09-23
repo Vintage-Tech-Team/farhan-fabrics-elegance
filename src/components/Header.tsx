@@ -48,6 +48,12 @@ const Header = () => {
               </a>
             </div>
             <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
+              Stitched
+            </a>
+            <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
+              Unstitched
+            </a>
+            <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
               Summer
             </a>
             <a href="#" className="text-foreground hover:text-primary transition-colors font-medium">
@@ -113,6 +119,12 @@ const Header = () => {
               </a>
               <a href="#" className="text-foreground hover:text-primary transition-colors font-medium py-2">
                 Women
+              </a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium py-2">
+                Stitched
+              </a>
+              <a href="#" className="text-foreground hover:text-primary transition-colors font-medium py-2">
+                Unstitched
               </a>
               <a href="#" className="text-foreground hover:text-primary transition-colors font-medium py-2">
                 Summer

@@ -24,6 +24,7 @@ const ProductShowcase = () => {
         rating: 4.8,
         reviews: 124,
         category: "men",
+        type: "stitched",
         sale: true
       },
       {
@@ -37,6 +38,7 @@ const ProductShowcase = () => {
         rating: 4.9,
         reviews: 89,
         category: "women",
+        type: "unstitched",
         sale: false
       },
       {
@@ -50,6 +52,7 @@ const ProductShowcase = () => {
         rating: 4.7,
         reviews: 156,
         category: "women",
+        type: "stitched",
         sale: true
       },
       {
@@ -63,6 +66,7 @@ const ProductShowcase = () => {
         rating: 4.6,
         reviews: 73,
         category: "men",
+        type: "unstitched",
         sale: false
       }
     ],
@@ -78,6 +82,7 @@ const ProductShowcase = () => {
         rating: 4.9,
         reviews: 89,
         category: "women",
+        type: "stitched",
         sale: false
       },
       {
@@ -91,6 +96,7 @@ const ProductShowcase = () => {
         rating: 4.6,
         reviews: 73,
         category: "men",
+        type: "stitched",
         sale: false
       }
     ]
@@ -183,6 +189,9 @@ const ProductShowcase = () => {
                   </span>
                   <span className={product.season === 'summer' ? 'season-badge-summer' : 'season-badge-winter'}>
                     {product.season === 'summer' ? '☀️ Summer' : '❄️ Winter'}
+                  </span>
+                  <span className={`fabric-badge ${product.type === 'stitched' ? 'bg-accent/10 text-accent border-accent/20' : 'bg-maroon/10 text-maroon border-maroon/20'}`}>
+                    {product.type === 'stitched' ? '✂️ Stitched' : '📏 Unstitched'}
                   </span>
                 </div>
 

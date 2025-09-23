@@ -2,6 +2,8 @@ import { Card } from "@/components/ui/card";
 import menFormal from "@/assets/men-formal-navy.jpg";
 import womenFormal from "@/assets/women-formal-emerald.jpg"; 
 import fabricCollection from "@/assets/fabric-collection.jpg";
+import stitchedMens from "@/assets/stitched-menswear.jpg";
+import unstitchedFabric from "@/assets/unstitched-womens-fabric.jpg";
 
 const FeaturedCategories = () => {
   const categories = [
@@ -75,6 +77,72 @@ const FeaturedCategories = () => {
               </div>
             </Card>
           ))}
+        </div>
+
+        {/* Stitched vs Unstitched Categories */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-serif font-bold text-center mb-8">
+            Shop by Style
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+            <Card className="category-card">
+              <div className="relative h-80 overflow-hidden">
+                <img
+                  src={stitchedMens}
+                  alt="Stitched Collection"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h4 className="text-2xl font-serif font-semibold mb-2">
+                    Stitched Collection
+                  </h4>
+                  <p className="text-sm text-white/90 mb-2">
+                    Ready-to-Wear Clothing
+                  </p>
+                  <p className="text-sm text-white/80">
+                    Perfect fit, premium tailoring, immediate delivery
+                  </p>
+                </div>
+
+                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white font-medium text-lg bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
+                    Shop Stitched
+                  </span>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="category-card">
+              <div className="relative h-80 overflow-hidden">
+                <img
+                  src={unstitchedFabric}
+                  alt="Unstitched Collection"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h4 className="text-2xl font-serif font-semibold mb-2">
+                    Unstitched Fabric
+                  </h4>
+                  <p className="text-sm text-white/90 mb-2">
+                    Premium Fabric Pieces
+                  </p>
+                  <p className="text-sm text-white/80">
+                    Custom tailoring, perfect measurements, your style
+                  </p>
+                </div>
+
+                <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="text-white font-medium text-lg bg-white/20 backdrop-blur-sm px-6 py-3 rounded-lg">
+                    Shop Unstitched
+                  </span>
+                </div>
+              </div>
+            </Card>
+          </div>
         </div>
 
         {/* Seasonal Categories */}

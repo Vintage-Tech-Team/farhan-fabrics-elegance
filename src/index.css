@@ -198,6 +198,17 @@ All colors MUST be HSL.
            bg-secondary text-secondary-foreground border border-border;
   }
 
+  /* Type Badges */
+  .type-badge-stitched {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium 
+           bg-accent/10 text-accent border border-accent/20;
+  }
+
+  .type-badge-unstitched {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium 
+           bg-maroon/10 text-maroon border border-maroon/20;
+  }
+
   /* Season Badge */
   .season-badge-summer {
     @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium 
