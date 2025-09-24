@@ -39,6 +39,13 @@ export type Fabric = {
   created_at?: string;
 };
 
+export type ProductImage = {
+  id: number;
+  product_id: number;
+  image_url: string; // store Cloudinary public_id
+  is_primary: boolean | null;
+};
+
 type PaginatedResult<T> = {
   data: T[];
   total: number;
@@ -282,5 +289,61 @@ export async function updateProduct(
 
 export async function deleteProduct(id: number): Promise<void> {
   const { error } = await supabase.from("products").delete().eq("id", id);
+  if (error) throw error;
+}
+
+// Product images CRUD (table name: product_images)
+export async function fetchProductImages(
+  productId: number
+): Promise<ProductImage[]> {
+  const { data, error } = await supabase
+    .from("product_images")
+    .select("id,product_id,image_url,is_primary")
+    .eq("product_id", productId)
+    .order("id", { ascending: true });
+  if (error) throw error;
+  return (data as ProductImage[]) ?? [];
+}
+
+export async function addProductImage(
+  productId: number,
+  publicId: string,
+  isPrimary = false
+): Promise<ProductImage> {
+  const { data, error } = await supabase
+    .from("product_images")
+    .insert({
+      product_id: productId,
+      image_url: publicId,
+      is_primary: isPrimary,
+    })
+    .select("id,product_id,image_url,is_primary")
+    .single();
+  if (error) throw error;
+  return data as ProductImage;
+}
+
+export async function setPrimaryProductImage(
+  productId: number,
+  imageId: number
+): Promise<void> {
+  // Unset others, then set chosen one
+  const { error: e1 } = await supabase
+    .from("product_images")
+    .update({ is_primary: false })
+    .eq("product_id", productId);
+  if (e1) throw e1;
+  const { error: e2 } = await supabase
+    .from("product_images")
+    .update({ is_primary: true })
+    .eq("id", imageId);
+  if (e2) throw e2;
+}
+
+export async function deleteProductImage(imageId: number): Promise<void> {
+  const { error } = await supabase
+    .from("product_images")
+    .delete()
+    .eq("id", imageId);
   if (error) throw error;
 }

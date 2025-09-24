@@ -5,3 +5,4 @@ export { default as AdminSections } from "./Sections";
 export { default as AdminProducts } from "./Products";
 export { default as AdminFabrics } from "./Fabrics";
 export { default as AdminOrders } from "./Orders";
+export { default as ProductDetails } from "./ProductDetails";

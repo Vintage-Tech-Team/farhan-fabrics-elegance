@@ -6,6 +6,13 @@ import {
   Product,
   updateProduct,
 } from "@/lib/queries";
+import ProductImagesModal from "@/components/ProductImagesModal";
+import { Cloudinary } from "@cloudinary/url-gen";
+import { AdvancedImage } from "@cloudinary/react";
+import { auto } from "@cloudinary/url-gen/actions/resize";
+import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
+import { useEffect as useEffect2, useState as useState2 } from "react";
+import { fetchProductImages } from "@/lib/queries";
 
 const AdminProducts = () => {
   const [items, setItems] = useState<Product[]>([]);
@@ -25,6 +32,30 @@ const AdminProducts = () => {
     stock: number | null;
   }>({ name: "", price: 0, stock: 0 });
   const editing = Boolean(form.id);
+  const [imagesFor, setImagesFor] = useState<number | null>(null);
+  const cld = new Cloudinary({
+    cloud: { cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME },
+  });
+  const [primaryMap, setPrimaryMap] = useState2<Record<number, string | null>>(
+    {}
+  );
+
+  useEffect2(() => {
+    // Load primary images for first page items
+    const run = async () => {
+      const entries = await Promise.all(
+        items.map(async (p) => {
+          const imgs = await fetchProductImages(p.id);
+          const primary = imgs.find((i) => i.is_primary) || imgs[0];
+          return [p.id, primary ? primary.image_url : null] as const;
+        })
+      );
+      const map: Record<number, string | null> = {};
+      for (const [id, publicId] of entries) map[id] = publicId;
+      setPrimaryMap(map);
+    };
+    if (items.length) run();
+  }, [items]);
 
   const load = async () => {
     setLoading(true);
@@ -174,6 +205,7 @@ const AdminProducts = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Image</th>
                 <th className="px-4 py-2">Price</th>
                 <th className="px-4 py-2">Stock</th>
                 <th className="px-4 py-2">Created</th>
@@ -184,6 +216,28 @@ const AdminProducts = () => {
               {filtered.map((p) => (
                 <tr key={p.id} className="border-t">
                   <td className="px-4 py-2">{p.name}</td>
+                  <td className="px-4 py-2">
+                    {primaryMap[p.id]
+                      ? (() => {
+                          const img = cld
+                            .image(primaryMap[p.id] as string)
+                            .format("auto")
+                            .quality("auto")
+                            .resize(
+                              auto().gravity(autoGravity()).width(60).height(60)
+                            );
+                          return <AdvancedImage cldImg={img} />;
+                        })()
+                      : null}
+                    <div>
+                      <button
+                        className="mt-1 rounded border px-2 py-1 text-xs"
+                        onClick={() => setImagesFor(p.id)}
+                      >
+                        Images
+                      </button>
+                    </div>
+                  </td>
                   <td className="px-4 py-2">Rs {p.price}</td>
                   <td className="px-4 py-2">{p.stock ?? 0}</td>
                   <td className="px-4 py-2">
@@ -199,6 +253,12 @@ const AdminProducts = () => {
                       >
                         Edit
                       </button>
+                      <a
+                        className="rounded border px-3 py-1"
+                        href={`/admin/products/${p.id}`}
+                      >
+                        Details
+                      </a>
                       <button
                         className="rounded border px-3 py-1 text-red-600"
                         onClick={() => onDelete(p.id)}
@@ -213,6 +273,12 @@ const AdminProducts = () => {
           </table>
         </div>
       )}
+
+      <ProductImagesModal
+        productId={imagesFor ?? 0}
+        isOpen={imagesFor !== null}
+        onClose={() => setImagesFor(null)}
+      />
     </div>
   );
 };

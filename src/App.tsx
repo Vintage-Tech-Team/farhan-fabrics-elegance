@@ -16,6 +16,7 @@ import {
   AdminProducts,
   AdminFabrics,
   AdminOrders,
+  ProductDetails,
 } from "./pages/admin";
 
 const AdminGuard = ({ children }: { children: React.ReactNode }) => {
@@ -51,6 +52,7 @@ const App = () => (
               <Route path="sections" element={<AdminSections />} />
               <Route path="fabrics" element={<AdminFabrics />} />
               <Route path="products" element={<AdminProducts />} />
+              <Route path="products/:id" element={<ProductDetails />} />
               <Route path="orders" element={<AdminOrders />} />
               {/* Future: nested admin CRUD routes here */}
             </Route>
