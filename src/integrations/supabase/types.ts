@@ -14,7 +14,277 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categories: {
+        Row: {
+          created_at: string | null
+          id: number
+          name: string
+          slug: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          name: string
+          slug?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          name?: string
+          slug?: string | null
+        }
+        Relationships: []
+      }
+      fabrics: {
+        Row: {
+          created_at: string | null
+          id: number
+          name: string
+          season: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          name: string
+          season?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          name?: string
+          season?: string | null
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          id: number
+          order_id: number | null
+          price: number
+          product_id: number | null
+          quantity: number
+        }
+        Insert: {
+          id?: number
+          order_id?: number | null
+          price: number
+          product_id?: number | null
+          quantity: number
+        }
+        Update: {
+          id?: number
+          order_id?: number | null
+          price?: number
+          product_id?: number | null
+          quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string | null
+          id: number
+          payment_method: string | null
+          status: string | null
+          total_amount: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: number
+          payment_method?: string | null
+          status?: string | null
+          total_amount?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: number
+          payment_method?: string | null
+          status?: string | null
+          total_amount?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      product_images: {
+        Row: {
+          id: number
+          image_url: string
+          is_primary: boolean | null
+          product_id: number | null
+        }
+        Insert: {
+          id?: number
+          image_url: string
+          is_primary?: boolean | null
+          product_id?: number | null
+        }
+        Update: {
+          id?: number
+          image_url?: string
+          is_primary?: boolean | null
+          product_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          category_id: number | null
+          created_at: string | null
+          description: string | null
+          discount_price: number | null
+          fabric_id: number | null
+          gender: string | null
+          id: number
+          name: string
+          price: number
+          season: string | null
+          section_id: number | null
+          stock: number | null
+        }
+        Insert: {
+          category_id?: number | null
+          created_at?: string | null
+          description?: string | null
+          discount_price?: number | null
+          fabric_id?: number | null
+          gender?: string | null
+          id?: number
+          name: string
+          price: number
+          season?: string | null
+          section_id?: number | null
+          stock?: number | null
+        }
+        Update: {
+          category_id?: number | null
+          created_at?: string | null
+          description?: string | null
+          discount_price?: number | null
+          fabric_id?: number | null
+          gender?: string | null
+          id?: number
+          name?: string
+          price?: number
+          season?: string | null
+          section_id?: number | null
+          stock?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_fabric_id_fkey"
+            columns: ["fabric_id"]
+            isOneToOne: false
+            referencedRelation: "fabrics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "products_section_id_fkey"
+            columns: ["section_id"]
+            isOneToOne: false
+            referencedRelation: "sections"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          address: string | null
+          created_at: string | null
+          full_name: string | null
+          id: string
+          phone_number: string | null
+          role: string | null
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id: string
+          phone_number?: string | null
+          role?: string | null
+        }
+        Update: {
+          address?: string | null
+          created_at?: string | null
+          full_name?: string | null
+          id?: string
+          phone_number?: string | null
+          role?: string | null
+        }
+        Relationships: []
+      }
+      sections: {
+        Row: {
+          category_id: number | null
+          created_at: string | null
+          id: number
+          name: string
+          slug: string | null
+        }
+        Insert: {
+          category_id?: number | null
+          created_at?: string | null
+          id?: number
+          name: string
+          slug?: string | null
+        }
+        Update: {
+          category_id?: number | null
+          created_at?: string | null
+          id?: number
+          name?: string
+          slug?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sections_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
