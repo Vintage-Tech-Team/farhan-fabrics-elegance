@@ -53,3 +53,32 @@ This project is built with:
 ## How can I deploy this project?
 
 You can deploy using any static hosting for Vite builds (e.g., Vercel, Netlify, Cloudflare Pages). Run `npm run build` and upload the `dist` directory.
+
+## Supabase database setup
+
+1. Create a Supabase project and get `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`.
+2. Create a `./supabase` folder (included) with:
+   - `migrations/001_init.sql`
+   - `seeds/001_seed.sql`
+3. Apply migration and seed using Supabase SQL editor or CLI:
+
+Using SQL editor:
+
+- Paste and run `migrations/001_init.sql`
+- Then run `seeds/001_seed.sql`
+
+Using Supabase CLI (optional):
+
+```bash
+supabase db reset --local # if using local dev
+supabase db remote commit # or apply to remote if configured
+```
+
+4. Add env vars in `.env` at project root:
+
+```env
+VITE_SUPABASE_URL=your_url
+VITE_SUPABASE_ANON_KEY=your_key
+```
+
+The app uses `src/lib/supabaseClient.ts` and `src/lib/queries.ts` for data access, supporting pagination and sorting.
